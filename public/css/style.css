@@ -1,0 +1,100 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23-feb-2020, 12.24.39
+    Author     : devis
+*/
+
+li a.active {
+    background-color: lightgrey;
+}
+
+body
+{
+    max-width: 75%;
+    margin-left: 12.5%;
+}
+
+div.citazione {
+    text-align: justify;
+}
+
+div.citazione > blockquote > p {
+    font-style: italic;
+}
+
+.header-sezione {
+    border-bottom: 5px solid #357ebd;
+    margin-bottom: 2em;
+}
+
+.navbar-brand {
+    display: inline-block;
+    text-indent: -9999px;
+    width: 130px;
+    height: 100px; /* Adjust this based on your image's aspect ratio */
+    background: url(../img/bycilogo.jpg) center center no-repeat;
+    background-size: contain; /* Ensures the image scales correctly */  
+    
+}
+
+.confirm {
+    font-size: 1.25rem; 
+    line-height: 1.6; 
+    margin-bottom: 1.5rem; 
+    font-style: italic;
+}
+
+.invalid-input {
+    color: #bd2626;
+    font-weight: bold;
+}
+/* Navbar link styles for larger buttons */
+.navbar-nav .nav-link {
+    padding: 1.5vw 10vw; /* Increase padding for larger buttons */
+    font-size: 1.2rem; /* Increase font size */
+    line-height: 1.5; /* Maintain vertical alignment of text */
+    height: auto; /* Allow the height to adjust based on content */
+}
+
+.navbar-toggler {
+    padding: 1vw 2vw; /* Adjust padding for the navbar toggler button */
+}
+
+.navbar-brand {
+    font-size: 1.5rem; /* Ensure the brand font size matches the larger buttons */
+    padding: 10px 15px; /* Adjust padding to align with the larger buttons */
+    height: 4.5vw; /* Keep the same height as before */
+    line-height: 4.5vw; /* Vertically center the brand text */
+}
+/* Footer styles */
+.footer {
+    background-color: #f8f9fa; /* You can change this color to fit your theme */
+    border-top: 1px solid #dee2e6;
+    margin-top: 10px; /* Add space above the footer */
+    padding: 100px 100px;
+}
+
+.footer .footer-image {
+    width: 5cvw; /* Adjust this size according to your needs */
+    height: auto;
+    background: url(../img/logoBianco.jpg) center center no-repeat;
+    background-size: contain; /* Ensures the image scales correctly */  
+
+}
+
+.footer p {
+    margin: 3px; /* Remove margins for footer text */
+}
+
+.footer a {
+    color: #357ebd; /* Match the color to your site's color scheme */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Underline links on hover */
+}
