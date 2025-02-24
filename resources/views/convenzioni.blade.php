@@ -12,14 +12,14 @@
 @section('body')
 <div class="row">
     <div class="col-lg-12 col-sm-12">
-        <div class="descrizione">
-            <h2>Le nostre convenzioni</h2>
-            <p>Descrizione delle convenzioni disponibili per i membri del BMW Youngtimer Club Italia.</p>
-            <ul>
-                <li>Convenzione 1: Descrizione della convenzione 1.</li>
-                <li>Convenzione 2: Descrizione della convenzione 2.</li>
-                <li>Convenzione 3: Descrizione della convenzione 3.</li>
-            </ul>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Convenzione con Bartolini e Mauro assicurazioni</h5>
+                <p class="card-text">Descrizione della convenzione con Bartolini e Mauro assicurazioni.</p>
+                <a href="{{ url('/pdf/Offerta commerciale-BMW-Youngtimer-Club-loghi.pdf') }}" class="btn btn-primary" download>
+                    Scarica l'offerta commerciale
+                </a>
+            </div>
         </div>
     </div>
 </div>

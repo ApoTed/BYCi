@@ -101,7 +101,7 @@
         <footer class="footer text-lg-start bg-light mt-5 py-3 border-top">
             <div class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <div class="mb-3 mb-md-0">
-                    <p>Email: <a href="mailto:youremail@example.com">apoted15@gmail.com</a></p>
+                    <p>Email: <a href="mailto:segreteria@bmwyoungtimerclubitalia.it">segreteria@bmwyoungtimerclubitalia.it</a></p>
                     <p>Phone: +123456789</p>
                 </div>
                 <div>

@@ -1,5 +1,3 @@
-<?php
-// filepath: /home/apoted/Desktop/coding/web/BYCi/resources/views/macchina/edit.blade.php
 @extends('layouts.master')
 
 @section('title', 'Modifica Macchina')
