@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use App\Models\DataLayer;
 
 class AuthController extends Controller
@@ -12,7 +13,12 @@ class AuthController extends Controller
 
         return view('auth.auth');
     }
-    
+    public function logout() {
+
+        session_start();
+        session_destroy();
+        return Redirect::to(route('home'));
+    }
     public function login(Request $request) {
         
         session_start();
@@ -35,13 +41,6 @@ class AuthController extends Controller
         
         $dl->addUser($request->input('name'), $request->input('registration-password'), $request->input('registration-email'));
        
-        return Redirect::to(route('user.login'));
-    }
-
-    public function logout() {
-
-        session_start();
-        session_destroy();
         return Redirect::to(route('home'));
     }
 

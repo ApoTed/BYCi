@@ -5,118 +5,94 @@ namespace App\Models;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage; // Import the Storage facade
 
 class DataLayer
 {
-    /*public function listBooks($userID) {     
-        $books = Book::where('user_id',$userID)->orderBy('title','asc')->get();   
-        return $books;
+    /*public function listEvents() {     
+        $events = Evento::orderBy('titolo','asc')->get();   
+        return $events;
+    }*/
+    public function listEvents() {     
+        // Assuming 'created_at' is the column representing the event date
+        $events = Evento::orderBy('created_at', 'desc')->get();   
+        return $events;
     }
-
-    public function findBookById($id) {
-        return Book::find($id);
-    }
-
-    public function listAuthors($userID) {  
-        $authors = Author::where('user_id',$userID)->orderBy('lastname','asc')
-                ->orderBy('firstname','asc')->get();
-        return $authors;
-    }
-
-    public function findAuthorById($id) {
-        return Author::find($id);
-    }
-
-    public function getAllCategories() {
-        return Category::orderBy('name','asc')->get();
-    }
-
-    public function addBook($title, $author_id, $categories, $userID) {
-        $book = new Book;
-        $book->title = $title;
-        $book->author_id = $author_id;
-        $book->user_id = $userID;
-        $book->save();
-        foreach($categories as $cat) {
-            $book->categories()->attach($cat);
-        }
-    }
-
-    public function addAuthor($first_name, $last_name, $userID) {
-        $author = new Author;
-        $author->firstname = $first_name;
-        $author->lastname = $last_name;
-        $author->user_id = $userID;
-        $author->save();
-
-        //use the factory to randomly generate an address
-        Address::factory()->count(1)->create(['author_id' => $author->id]);
-    }
-
-    public function editBook($id, $title, $author_id, $categories) {
-        $book = Book::find($id);
-        $book->title = $title;
-        $book->author_id = $author_id;
-        $book->save();
-
-        // Cancel the previous list of categories
-        $prevCategories = $book->categories;
-        foreach($prevCategories as $prevCat) {
-            $book->categories()->detach($prevCat->id);
-        }
-
-        // Update the list of categories
-        foreach($categories as $cat) {
-            $book->categories()->attach($cat);
-        }
-    }
-
-    public function editAuthor($id, $first_name, $last_name) {
-        $author = Author::find($id);
-        $author->firstname = $first_name;
-        $author->lastname = $last_name;
-        $author->save();
-    }
-
-    public function deleteBook($id) {
-        $book = Book::find($id);
-        $categories = $book->categories;
-        foreach($categories as $cat) {
-            $book->categories()->detach($cat->id);
-        }
-        $book->delete();
-    }
-
-    public function deleteAuthor($id) {
-        $author = Author::find($id);
-        $author->address->delete();
-        $author->delete();
-    }
-
-    public function findAuthorByNames($first_name, $last_name) {
-        $authors = DB::select('select * from author where (firstname = ? AND lastname = ?)',[$first_name, $last_name]);
-        if (count($authors) == 0) {
-            return false;
+    public function updateUser($id, $name, $password = null)
+    {
+        \Log::info('DataLayer updateUser called with id: ' . $id . ', name: ' . $name . ', password: ' . ($password ? 'provided' : 'not provided'));
+    
+        $user = User::find($id);
+        if ($user) {
+            \Log::info('User found: ' . $user->id);
+            $user->name = $name;
+            if ($password) {
+                $user->password = Hash::make($password);
+            }
+            $user->save();
+            \Log::info('User updated: ' . $user->id);
         } else {
-            return true;
+            \Log::error('User not found with id: ' . $id);
         }
     }
 
-    public function findBookByTitle($title) {
-        $books = Book::where('title', $title)->get();
-        
-        if (count($books) == 0) {
-            return false;
-        } else {
-            return true;
-        }
+    
+
+    public function findEvento($id){
+        return Evento::find($id);
     }
-*/
+
+    public function addEvento($titolo, $user_id, $contenuto, $immaginePath)
+{
+    $event = new Evento();
+    $event->titolo = $titolo;
+    $event->user_id = $user_id;
+    $event->contenuto = $contenuto;
+
+    if ($immaginePath) {
+        $event->immagine = $immaginePath;
+    }
+
+    $event->save();
+}
+
+    public function editEvento($id, $titolo, $user_id, $contenuto, $immagine)
+    {
+        $event = Evento::find($id);
+        $event->titolo = $titolo;
+        $event->user_id = $user_id;
+        $event->contenuto = $contenuto;
+    
+        if ($immagine) {
+            if ($event->immagine) {
+                Storage::disk('public')->delete($event->immagine);
+            }
+    
+            $path = $immagine->store('event_images', 'public');
+            $event->immagine = $path;
+        }
+    
+        $event->save();
+    }
+    public function getUsersExcludingAdmin() {
+        return User::where('role', '!=', 'admin')->get();
+    }
+    public function deleteEvento($id){
+        $event = Evento::find($id);
+        if ($event->immagine) {
+            Storage::disk('public')->delete($event->immagine);
+        }
+        $commenti=Commento::where('evento_id',$id)->get();
+        foreach($commenti as $commento){
+            $commento->delete();
+        }
+        $event->delete();
+    }
+
     public function validUser($email, $password) {
         $user = User::where('email', $email)->first();
         
-        if($user && Hash::check($password, $user->password))
-        {
+        if ($user && Hash::check($password, $user->password)) {
             return true;
         } else {
             return false;
@@ -157,4 +133,36 @@ class DataLayer
             return true;
         }
     }
+    // New methods for handling comments
+
+    public function addCommento($contenuto, $user_id, $evento_id)
+    {
+        $commento = new Commento();
+        $commento->contenuto = $contenuto;
+        $commento->user_id = $user_id;
+        $commento->evento_id = $evento_id;
+        $commento->save();
+    }
+
+    public function deleteCommento($id)
+    {
+        $commento = Commento::find($id);
+        if ($commento) {
+            $commento->delete();
+        }
+    }
+
+    public function listCommentiByEvento($evento_id)
+    {
+        return Commento::where('evento_id', $evento_id)
+                       ->orderBy('created_at', 'asc') // Orders comments from oldest to newest
+                       ->get();
+    }
+    public function deleteCommentsByUserId($user_id)
+{
+    $comments = Commento::where('user_id', $user_id)->get();
+    foreach ($comments as $comment) {
+        $comment->delete();
+    }
+} 
 }

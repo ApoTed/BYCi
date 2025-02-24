@@ -7,7 +7,9 @@
 
         <!-- Stylesheets -->
         <link rel="stylesheet" href="{{ url('/') }}/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{{ url('/') }}/css/style.css">
+        <!--<link rel="stylesheet" href="{{ url('/') }}/css/style.css">-->
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <!-- JavaScript and Plugins -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,9 +23,13 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="#">Biblios</a>
+        
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('js/paginationScript.js') }}"></script>
+<div class="wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" style="padding: 0;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">BYCI</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -32,27 +38,35 @@
                         <li class="nav-item">
                             <a class="nav-link @yield('active_home')" href="{{ route('home') }}">Home</a>
                         </li>
-                        @if((isset($_SESSION['logged'])) && ($_SESSION['logged']))
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle @yield('active_MyLibrary')" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                My Library
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                @if($_SESSION['role'] === 'registered_user')
-                                <li><a class="dropdown-item" href="{{ route('book.index') }}">Books List</a></li>
-                                <li><a class="dropdown-item" href="{{ route('author.index') }}">Authors List</a></li>
-                                @endif
-                                @if($_SESSION['role'] === 'admin')
-                                <li><a class="dropdown-item" href="{{ route('category.index') }}">Manage categories</a></li>
-                                @endif
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link @yield('active_eventi')" href="{{ route('evento.index') }}">Eventi</a>
                         </li>
-                        @endif
+                        <li class="nav-item">
+                            <a class="nav-link @yield('active_convenzioni')" href="{{ route('convenzioni') }}">Convenzioni</a>
+                        </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link @yield('active_macchine')" href="{{ route('macchina.index') }}">Macchine</a>
+                        </li>-->
+                        @if(isset($_SESSION['logged']) && $_SESSION['logged'] && $_SESSION['role'] === 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link @yield('active_create')" href="{{ route('evento.create') }}">Crea Evento</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle @yield('active_gestisci')" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                           Gestisci Utenti
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item @yield('active_gestisciUsers')" href="{{ route('user.create') }}">Crea Utente</a></li>
+                            <li><a class="dropdown-item" href="{{ route('user.list') }}">Lista Utenti</a></li>
+                        </ul>
+                        </li>
+                        
+                        @endif   
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         @if(isset($_SESSION['logged']))
                         <li class="nav-item">
-                            <span class="navbar-text me-2">Welcome, {{ $_SESSION['loggedName'] }}</span>
+                            <span class="navbar-text me-2">Benvenuto, {{ $_SESSION['loggedName'] }}</span>
                             <a class="nav-link d-inline" href="{{ route('user.logout') }}"><i class="bi bi-box-arrow-right"></i></a>
                         </li>
                         @else
@@ -77,21 +91,29 @@
             <header class="mb-4">
                 <h1>@yield('title')</h1>
             </header>
-            <main>
+        <div class="mt-4">
+            <main id="page-body">
                 @yield('body')
             </main>
+            </div>
         </div>
 
-        <footer class="footer bg-light mt-5 py-3 border-top">
-            <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <footer class="footer text-lg-start bg-light mt-5 py-3 border-top">
+            <div class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <div class="mb-3 mb-md-0">
-                    <p>Email: <a href="mailto:youremail@example.com">youremail@example.com</a></p>
+                    <p>Email: <a href="mailto:youremail@example.com">apoted15@gmail.com</a></p>
                     <p>Phone: +123456789</p>
                 </div>
                 <div>
-                    <img src="{{ url('/') }}/img/logoBianco.jpg" alt="Footer Logo" class="img-fluid" style="max-height: 50px;">
+                    <a href="https://www.facebook.com/groups/BmwYoungtimerClubItalia?locale=it_IT" target="_blank" class="ms-2">
+                        <i class="fab fa-facebook fa-2x"></i>
+                    </a>
+                    <a href="https://www.instagram.com/bmwyoungtimer/" target="_blank" class="ms-2">
+                        <i class="fab fa-instagram fa-2x"></i>
+                    </a>
                 </div>
             </div>
         </footer>
+        </div>
     </body>
 </html>

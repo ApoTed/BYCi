@@ -1,8 +1,8 @@
 $(document).ready(function(){
     // Pagination feature
     var currentPage = 1;
-    var rowsPerPage = parseInt($("#rowsPerPage").val()); // Numero di righe per pagina
-    var $tableRows = $(".table tbody tr");
+    var rowsPerPage = 6; // Default number of rows per page
+    var $tableRows = $(".row > .col-md-4"); // Adjust selector to match your rows
     var totalPages = Math.ceil($tableRows.length / rowsPerPage);
 
     function showPage(page) {
@@ -11,14 +11,14 @@ $(document).ready(function(){
 
         $tableRows.hide().slice(start, end).show();
 
-        // Rimuovi i numeri di pagina esistenti
+        // Remove existing page numbers
         $(".page-item.pageNumber").remove();
 
-        // Calcola quali numeri di pagina visualizzare
+        // Calculate which page numbers to display
         var startPage = Math.max(1, currentPage - 1);
         var endPage = Math.min(startPage + 2, totalPages);
 
-        // Aggiungere i numeri di pagina calcolati al markup HTML
+        // Add calculated page numbers to the HTML markup
         for (var i = startPage; i <= endPage; i++) {
             var $li = $("<li>", { class: "page-item pageNumber" });
             var $link = $("<a>", { class: "page-link", href: "#", text: i });
@@ -44,19 +44,20 @@ $(document).ready(function(){
         }
     }
 
-    // Aggiorna il numero di righe per pagina quando viene selezionato un nuovo valore
-    $("#rowsPerPage").on("change", function() {
-        rowsPerPage = parseInt($(this).val());
-        totalPages = Math.ceil($tableRows.length / rowsPerPage);
-        showPage(currentPage);
-    });
-
     showPage(currentPage);
 
-    $("#previousPage").on("click", goToPreviousPage);
-    $("#nextPage").on("click", goToNextPage);
+    $("#previousPage").on("click", function(e) {
+        e.preventDefault();
+        goToPreviousPage();
+    });
 
-    $(document).on("click", ".pageNumber", function() {
+    $("#nextPage").on("click", function(e) {
+        e.preventDefault();
+        goToNextPage();
+    });
+
+    $(document).on("click", ".pageNumber", function(e) {
+        e.preventDefault();
         var page = parseInt($(this).text());
         currentPage = page;
         showPage(currentPage);

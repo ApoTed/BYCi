@@ -12,14 +12,30 @@ li a.active {
     background-color: lightgrey;
 }
 
-body
-{
-    max-width: 75%;
-    margin-left: 12.5%;
+/* Ensure images are responsive */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+body {
+    max-width: 100%;
+    margin: 0; /* Remove default margin */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes the full height of the viewport */
+    height:100%;
+}
+.content {
+    flex: 1;
 }
 
 div.citazione {
     text-align: justify;
+}
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 div.citazione > blockquote > p {
@@ -34,13 +50,24 @@ div.citazione > blockquote > p {
 .navbar-brand {
     display: inline-block;
     text-indent: -9999px;
-    width: 130px;
+    width: 200px;
     height: 100px; /* Adjust this based on your image's aspect ratio */
-    background: url(../img/bycilogo.jpg) center center no-repeat;
-    background-size: contain; /* Ensures the image scales correctly */  
-    
-}
+    background: url(../img/logoBianco.jpg) center center no-repeat;
+    background-size: contain; /* Ensures the image scales correctly */
+    position: relative; /* Ensure the pseudo-element is positioned correctly */
+    padding-left: 100px; /* Adjust this value based on your image's width */
 
+}
+.navbar-brand::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 80%, rgba(255, 255, 255, 1));
+    pointer-events: none; /* Ensure the overlay doesn't interfere with interactions */
+}
 .confirm {
     font-size: 1.25rem; 
     line-height: 1.6; 
@@ -52,17 +79,14 @@ div.citazione > blockquote > p {
     color: #bd2626;
     font-weight: bold;
 }
+
 /* Navbar link styles for larger buttons */
-.navbar-nav .nav-link {
-    padding: 1.5vw 10vw; /* Increase padding for larger buttons */
-    font-size: 1.2rem; /* Increase font size */
-    line-height: 1.5; /* Maintain vertical alignment of text */
-    height: auto; /* Allow the height to adjust based on content */
+
+#page-body{
+    flex:1 0 auto;
+    height: 100%;
 }
 
-.navbar-toggler {
-    padding: 1vw 2vw; /* Adjust padding for the navbar toggler button */
-}
 
 .navbar-brand {
     font-size: 1.5rem; /* Ensure the brand font size matches the larger buttons */
@@ -70,20 +94,84 @@ div.citazione > blockquote > p {
     height: 4.5vw; /* Keep the same height as before */
     line-height: 4.5vw; /* Vertically center the brand text */
 }
+.navbar-nav .nav-link {
+    padding: 0.25rem 0.5rem; /* Reduce padding for desktop */
+    font-size: 1rem; /* Adjust font size if needed */
+    margin-right: 0.5rem; /* Add margin to the right of each link */
+
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    background-color: #357ebd; /* Change to your desired color */
+    color: #fff; /* Ensure text is readable */
+    padding: 0.5rem 1rem; /* Increase padding when active, focused, or hovered */
+    border-radius: 5px; /* Optional: Add border radius for rounded corners */
+    margin-right: 0.5rem; /* Maintain margin on hover */
+
+}
+.btn-primary {
+    background-color: #357ebd; /* Match the navbar hover color */
+    border-color: #357ebd; /* Match the navbar hover color */
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #0056b3; /* Match the navbar link hover color */
+    border-color: #0056b3; /* Match the navbar link hover color */
+    color: #fff; /* Ensure text is readable */
+}
+/* Dropdown item styles */
+.dropdown-item:hover,
+.dropdown-item:focus,
+.dropdown-item.active {
+    background-color: #357ebd; /* Match the navbar hover color */
+    color: #fff; /* Ensure text is readable */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 767.98px) {
+    .navbar-nav .nav-link {
+        padding: 0.25rem 0.5rem; /* Reduce padding for mobile */
+        font-size: 0.9rem; /* Adjust font size for mobile */
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+        background-color: #357ebd; /* Change to your desired color */
+        color: #fff; /* Ensure text is readable */
+        padding: 0.5rem 1rem; /* Increase padding when active, focused, or hovered */
+        border-radius: 5px; /* Optional: Add border radius for rounded corners */
+    }
+
+    .navbar-toggler {
+        padding: 0.5rem 1rem; /* Adjust padding for the navbar toggler button on mobile */
+        margin: 0.5rem; /* Add margin to ensure it's not too close to the border */
+    }
+
+    .navbar-brand {
+        width: 150px; /* Adjust width for mobile */
+        height: 50px; /* Adjust height for mobile */
+        background-size: contain; /* Ensures the image scales correctly */
+    }
+}
 /* Footer styles */
 .footer {
+    flex-shrink: 0;
     background-color: #f8f9fa; /* You can change this color to fit your theme */
     border-top: 1px solid #dee2e6;
-    margin-top: 10px; /* Add space above the footer */
-    padding: 100px 100px;
+    margin-top: auto !important; 
+    padding: 20px; /* Adjust padding for the footer */
+    width: 100%; /* Ensure the footer spans the full width */
+    bottom: 0;
 }
 
 .footer .footer-image {
-    width: 5cvw; /* Adjust this size according to your needs */
+    width: 5vw; /* Adjust this size according to your needs */
     height: auto;
     background: url(../img/logoBianco.jpg) center center no-repeat;
     background-size: contain; /* Ensures the image scales correctly */  
-
 }
 
 .footer p {
@@ -97,4 +185,62 @@ div.citazione > blockquote > p {
 
 .footer a:hover {
     text-decoration: underline; /* Underline links on hover */
+}
+
+/* More Specific Custom Pagination Styles */
+.container .pagination .page-link {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.8rem !important;
+    color: #007bff !important; /* Customize link color */
+    border-radius: 0.25rem !important; /* Optional: Adjust border-radius for rounded corners */
+    border: 1px solid #dee2e6 !important; /* Optional: Adjust border */
+}
+
+.container .pagination .page-item.active .page-link {
+    background-color: #357ebd !important; /* Change to match your site's color scheme */
+    border-color: #357ebd !important; /* Change border color to match */
+    color: white !important; /* Optional: Adjust text color for active state */
+}
+
+.container .pagination .page-link:hover {
+    color: #0056b3 !important; /* Change hover color */
+    text-decoration: none !important; /* Remove underline on hover */
+    background-color: #e9ecef !important; /* Optional: Adjust hover background color */
+    border-color: #dee2e6 !important; /* Optional: Adjust hover border color */
+}
+
+.container .pagination .page-item.disabled .page-link {
+    color: #6c757d !important; /* Optional: Adjust color for disabled state */
+}
+/* More Specific Custom Pagination Styles */
+.container .pagination .page-link {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.8rem !important;
+    color: #007bff !important; /* Customize link color */
+    border-radius: 0.25rem !important; /* Optional: Adjust border-radius for rounded corners */
+    border: 1px solid #dee2e6 !important; /* Optional: Adjust border */
+}
+
+.container .pagination .page-item.active .page-link {
+    background-color: #357ebd !important; /* Change to match your site's color scheme */
+    border-color: #357ebd !important; /* Change border color to match */
+    color: white !important; /* Optional: Adjust text color for active state */
+}
+
+.container .pagination .page-link:hover {
+    color: #0056b3 !important; /* Change hover color */
+    text-decoration: none !important; /* Remove underline on hover */
+    background-color: #e9ecef !important; /* Optional: Adjust hover background color */
+    border-color: #dee2e6 !important; /* Optional: Adjust hover border color */
+}
+
+.container .pagination .page-item.disabled .page-link {
+    color: #6c757d !important; /* Optional: Adjust color for disabled state */
+}
+
+/* Specific styles for pagination arrows */
+.container .pagination .page-item .page-link svg {
+    width: 1em !important; /* Adjust the width of the arrows */
+    height: 1em !important; /* Adjust the height of the arrows */
+    vertical-align: middle !important; /* Align arrows vertically */
 }

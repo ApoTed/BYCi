@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title','User authentication')
+@section('title','Autenticazione utente')
 
 @section('body')
 <script>
@@ -130,9 +130,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#login-tab">Login</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#register-tab">Register</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -170,35 +167,7 @@
                         </form>
                     </div>
 
-                    <div class="tab-pane" id="register-tab">
-                        <form id="register-form" action="{{ route('user.register') }}" method="post">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <input type="text" name="name" class="form-control" placeholder="Your name..."/>
-                            </div>
-                            <span class="invalid-input" id="invalid-name"></span>
-
-                            <div class="form-group mb-3">
-                                <input type="text" name="registration-email" class="form-control" placeholder="Your email..."/>
-                            </div>
-                            <span class="invalid-input" id="invalid-registrationEmail"></span>
-
-                            <div class="form-group mb-3">
-                                <input type="password" name="registration-password" class="form-control" placeholder="Type password..."/>
-                            </div>
-                            <span class="invalid-input" id="invalid-registrationPassword"></span>
-
-                            <div class="form-group mb-3">
-                                <input type="password" name="confirm-password" class="form-control" placeholder="Re-type password..."/>
-                            </div>
-                            <span class="invalid-input" id="invalid-confirmPassword"></span>
-
-                            <div class="form-group text-center mb-3">
-                                <label for="register-submit" class="btn btn-primary w-100"><i class="bi bi-person-plus"></i> Register</label>
-                                <input id="register-submit" class="d-none" type="submit" value="Register">
-                            </div>
-                        </form>
-                    </div>
+                    
                 </div>
             </div>
 @endsection
