@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html>
+            <!--pagina il club con descrizione, contatti e scaricare lo statuto.
+Aggiungere data evento inseribile dall'admin.
+Nel footer aggiungere partita iva e togliere numero di telefono.
+Aggiornare modulo di iscrizione 
+Aggiungere in home una sezione con immagini che porta direttamente agli eventi-->
+
     <head>
         <title>@yield('title')</title>
         <meta charset="UTF-8">
@@ -50,6 +56,9 @@
                         @if(isset($_SESSION['logged']) && $_SESSION['logged'] && $_SESSION['role'] === 'admin')
                         <li class="nav-item">
                             <a class="nav-link @yield('active_create')" href="{{ route('evento.create') }}">Crea Evento</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @yield('active_createConvenzione')" href="{{ route('convenzione.create') }}">Crea Convenzione</a>
                         </li>
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle @yield('active_gestisci')" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -102,7 +111,7 @@
             <div class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <div class="mb-3 mb-md-0">
                     <p>Email: <a href="mailto:segreteria@bmwyoungtimerclubitalia.it">segreteria@bmwyoungtimerclubitalia.it</a></p>
-                    <p>Phone: +123456789</p>
+                    <p>Partita IVA: 123456789</p>
                 </div>
                 <div>
                     <a href="https://www.facebook.com/groups/BmwYoungtimerClubItalia?locale=it_IT" target="_blank" class="ms-2">

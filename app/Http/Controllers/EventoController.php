@@ -152,7 +152,7 @@ class EventoController extends Controller
 
     $dl = new DataLayer();
     $dl->editEvento(
-        $id,
+        $id,    
         $request->input('titolo'),
         $_SESSION['loggedID'],
         $request->input('contenuto'),

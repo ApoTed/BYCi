@@ -19,7 +19,7 @@ Route::get('/user/logout', [AuthController::class, 'logout'])->name('user.logout
 Route::get('/ajaxUser', [AuthController::class, 'ajaxCheckForEmail']);
 
 //convenzioni
-Route::get('/convenzioni', [ConvenzioniController::class, 'index'])->name('convenzioni');
+Route::get('/convenzione/convenzioni', [ConvenzioniController::class, 'index'])->name('convenzioni');
 
 
 // Public routes for viewing events
@@ -33,6 +33,10 @@ Route::delete('/commento/delete/{id}/{evento_id}', [CommentoController::class, '
 
 // Admin-specific routes for creating, editing, and deleting events
 Route::group(['middleware' => ['authCustom', 'isAdmin']], function() {
+    Route::get('/convenzione/create', [ConvenzioniController::class, 'create'])->name('convenzione.create');
+    Route::post('/convenzione/store', [ConvenzioniController::class, 'store'])->name('convenzione.store');
+    Route::get('/convenzione/{id}/edit', [ConvenzioniController::class, 'edit'])->name('convenzione.edit');
+    Route::put('/convenzione/{id}', [ConvenzioniController::class, 'update'])->name('convenzione.update');
     Route::get('/user/{id}/edit', [UserController::class, 'editUser'])->name('user.edit');
     Route::post('/user/{id}/update', [UserController::class, 'updateUser'])->name('user.update');
     Route::post('/user/register', [AuthController::class, 'registration'])->name('user.register');

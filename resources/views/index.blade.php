@@ -1,6 +1,6 @@
 @extends('layouts.master') <!-- title - active_home - active_MyLibrary - breadcrumb - body -->
 
-@section('title', 'BYCI')
+@section('title', 'BYC')
 
 
 @section('active_home','active')
@@ -27,7 +27,7 @@
 <div class="row mt-4">
     <div class="col-12">
         <p>Per iscriversi al club serve compilare il modulo e inviarlo a <a href="mailto:segreteria@bmwyoungtimerclubitalia.it">segreteria@bmwyoungtimerclubitalia.it</a> che fornirà ulteriori dettagli.</p>
-        <a href="{{ url('/pdf/BYCI Modulo Iscrizione Club - 2025.pdf') }}" class="btn btn-primary" download>
+        <a href="{{ url('pdf/BYCI Modulo Iscrizione Club - 2025.pdf') }}" class="btn btn-primary" download>
             Scarica il modulo di iscrizione al club
         </a>    
     </div>

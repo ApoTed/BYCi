@@ -1,12 +1,11 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Evento;
 
+use App\Models\Evento;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,28 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->createUsers();
-        // User::factory(10)->create();
-        //Evento::factory()->create([
-         //   'titolo' => '2  Sample Event 2',
-            //'contenuto' => '2 This is a sample event description22222222222222222222.',
-          //  'immagine' => 'public/img/pretty-1-th.jpg',  // Replace with actual image path or URL
-            //'user_id' => 3,  // Assign the specific user ID
-        //]);
-        /*User::factory()->create([
-            'name' => 'apo',
-            'email' => 'apo@apo',
-            'password' => 'apo',
-            'role' => 'registered_user', 
-
-        ]);*/
-       
-        
+        //$this->createUsers();
+        $this->createConvenzioni();
     }
+
     private function createUsers() {
-
-        
-
         User::factory()->create([
             'name' => 'as',
             'email' => 'as@as',
@@ -48,6 +30,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Alessandro Bianchini',
             'email' => 'alessandro.bianchini@unibs.it',
             'password' => 'bianchini'
+        ]);
+    }
+
+    private function createConvenzioni() {
+        DB::table('convenzioni')->insert([
+            'titolo' => 'Prima Convenzione',
+            'descrizione' => 'Prima descrizione di convenzione',
+            'pdf_path' => 'pdf/Offerta commerciale-BMW-Youngtimer-Club-loghi.pdf',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }
