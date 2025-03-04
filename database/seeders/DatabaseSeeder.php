@@ -15,7 +15,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         //$this->createUsers();
-        $this->createConvenzioni();
+        //$this->createConvenzioni();
+        $this->createEventi();
+
     }
 
     private function createUsers() {
@@ -32,12 +34,34 @@ class DatabaseSeeder extends Seeder
             'password' => 'bianchini'
         ]);
     }
+    
 
     private function createConvenzioni() {
         DB::table('convenzioni')->insert([
             'titolo' => 'Prima Convenzione',
             'descrizione' => 'Prima descrizione di convenzione',
             'pdf_path' => 'pdf/Offerta commerciale-BMW-Youngtimer-Club-loghi.pdf',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+    private function createEventi() {
+        Evento::create([
+            'titolo' => 'Primo Evento',
+            'contenuto' => 'Descrizione del primo evento',
+            'immagine' => 'images/evento1.jpg',
+            'user_id' => 1, // Assicurati che l'utente con ID 1 esista
+            'data' => '2025-03-10',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        Evento::create([
+            'titolo' => 'Secondo Evento',
+            'contenuto' => 'Descrizione del secondo evento',
+            'immagine' => 'images/evento2.jpg',
+            'user_id' => 1, // Assicurati che l'utente con ID 1 esista
+            'data' => '2025-04-15',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

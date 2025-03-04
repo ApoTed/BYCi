@@ -16,8 +16,9 @@
         <div class="col-lg-8">
             <div class="card mb-4">
                 <div class="card-body">
-                <h2 class="card-title" style="padding-top: 10px; padding-bottom: 10px;">{{ $evento->titolo }}</h2>
-                <p class="text-muted">Pubblicato da {{ $evento->user->name }} il {{ $evento->created_at->format('d M Y') }}</p>
+                    <h2 class="card-title" style="padding-top: 10px; padding-bottom: 10px;">{{ $evento->titolo }}</h2>
+                    <p class="text-muted">Pubblicato da {{ $evento->user->name }} il {{ $evento->created_at->format('d M Y') }}</p>
+                    <p class="text-muted">Data Evento: {{ \Carbon\Carbon::parse($evento->data)->format('d M Y') }}</p>
                     @if($evento->immagine)
                         <!-- Display the image from the public storage -->
                         <img src="{{ asset('storage/' . $evento->immagine) }}" class="img-fluid mt-2" alt="Event Image" style="max-width: auto;">
@@ -76,13 +77,14 @@
         <div class="col-lg-4">
             <div class="card mb-4 shadow-sm">
                 <div class="card-header">
-                    Event Details
+                    Dettagli Evento
                 </div>
                 <div class="card-body">
-                    <p><strong>Titolo</strong> {{ $evento->titolo }}</p>
+                    <p><strong>Titolo:</strong> {{ $evento->titolo }}</p>
                     <p><strong>Creato il:</strong> {{ $evento->created_at->format('d M Y, H:i') }}</p>
                     <p><strong>Aggiornato il:</strong> {{ $evento->updated_at->format('d M Y, H:i') }}</p>
                     <p><strong>Pubblicato da:</strong> {{ $evento->user->name }}</p>
+                    <p><strong>Data Evento:</strong> {{ \Carbon\Carbon::parse($evento->data)->format('d M Y') }}</p>
                 </div>
             </div>
 
@@ -90,7 +92,7 @@
                 @if($_SESSION['role'] === 'admin')
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('evento.edit', $evento->id) }}" class="btn btn-primary"><i class="bi bi-pencil"></i> Modifica</a>
-                        <form action="{{ route('evento.destroy', $evento->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                        <form action="{{ route('evento.destroy', $evento->id) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler cancellare questo evento?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Cancella</button>

@@ -1,15 +1,13 @@
+
 @extends('layouts.master')
 
 @section('title', 'Crea Evento')
 
 @section('active_create', 'active')
 
-
-
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-<!--<li class="breadcrumb-item"><a href="{{ route('evento.index') }}">Eventi</a></li>-->
-<li class="breadcrumb-item active" aria-current="page">Create Evento</li>
+<li class="breadcrumb-item active" aria-current="page">Crea Evento</li>
 @endsection
 
 @section('body')
@@ -26,11 +24,17 @@
             <label for="contenuto">Descrizione</label>
             <textarea class="form-control" id="contenuto" name="contenuto" rows="5" required>{{ old('contenuto') }}</textarea>
         </div>
+
         <div class="form-group mb-3">
-    <label for="immagine">Immagine </label>
-    <input type="file" class="form-control" id="immagine" name="immagine">
-    <div id="fileError" class="text-danger mt-2" style="display: none;">Il file deve essere jpg, jpeg o png</div>
-</div>
+            <label for="data">Data Evento</label>
+            <input type="date" class="form-control" id="data" name="data" value="{{ old('data') }}" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="immagine">Immagine</label>
+            <input type="file" class="form-control" id="immagine" name="immagine">
+            <div id="fileError" class="text-danger mt-2" style="display: none;">Il file deve essere jpg, jpeg o png</div>
+        </div>
 
         <button type="submit" class="btn btn-primary">Crea Evento</button>
     </form>
@@ -42,10 +46,7 @@ document.getElementById('eventoForm').addEventListener('submit', function(event)
     var filePath = fileInput.value;
     var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
-    if (!fileInput.value) {
-        event.preventDefault();
-        alert('Devi selezionare un\'immagine.');
-    } else if (!allowedExtensions.exec(filePath)) {
+    if (fileInput.files.length > 0 && !allowedExtensions.exec(filePath)) {
         document.getElementById('fileError').style.display = 'block';
         event.preventDefault();
     } else {

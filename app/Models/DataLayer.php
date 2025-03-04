@@ -9,15 +9,12 @@ use Illuminate\Support\Facades\Storage; // Import the Storage facade
 
 class DataLayer
 {
-    /*public function listEvents() {     
-        $events = Evento::orderBy('titolo','asc')->get();   
-        return $events;
-    }*/
     public function listEvents() {     
-        // Assuming 'created_at' is the column representing the event date
-        $events = Evento::orderBy('created_at', 'desc')->get();   
+        // Ordina gli eventi per il campo 'data' in ordine decrescente
+        $events = Evento::orderBy('data', 'desc')->get();   
         return $events;
     }
+
     public function updateUser($id, $name, $password = null)
     {
         \Log::info('DataLayer updateUser called with id: ' . $id . ', name: ' . $name . ', password: ' . ($password ? 'provided' : 'not provided'));
@@ -36,32 +33,32 @@ class DataLayer
         }
     }
 
-    
-
     public function findEvento($id){
         return Evento::find($id);
     }
 
-    public function addEvento($titolo, $user_id, $contenuto, $immaginePath)
-{
-    $event = new Evento();
-    $event->titolo = $titolo;
-    $event->user_id = $user_id;
-    $event->contenuto = $contenuto;
+    public function addEvento($titolo, $user_id, $contenuto, $immaginePath, $data)
+    {
+        $event = new Evento();
+        $event->titolo = $titolo;
+        $event->user_id = $user_id;
+        $event->contenuto = $contenuto;
+        $event->data = $data;
 
-    if ($immaginePath) {
-        $event->immagine = $immaginePath;
+        if ($immaginePath) {
+            $event->immagine = $immaginePath;
+        }
+
+        $event->save();
     }
 
-    $event->save();
-}
-
-    public function editEvento($id, $titolo, $user_id, $contenuto, $immagine)
+    public function editEvento($id, $titolo, $user_id, $contenuto, $immagine, $data)
     {
         $event = Evento::find($id);
         $event->titolo = $titolo;
         $event->user_id = $user_id;
         $event->contenuto = $contenuto;
+        $event->data = $data;
     
         if ($immagine) {
             if ($event->immagine) {
@@ -74,9 +71,11 @@ class DataLayer
     
         $event->save();
     }
+
     public function getUsersExcludingAdmin() {
         return User::where('role', '!=', 'admin')->get();
     }
+
     public function deleteEvento($id){
         $event = Evento::find($id);
         if ($event->immagine) {
@@ -159,10 +158,10 @@ class DataLayer
                        ->get();
     }
     public function deleteCommentsByUserId($user_id)
-{
-    $comments = Commento::where('user_id', $user_id)->get();
-    foreach ($comments as $comment) {
-        $comment->delete();
-    }
-} 
+    {
+        $comments = Commento::where('user_id', $user_id)->get();
+        foreach ($comments as $comment) {
+            $comment->delete();
+        }
+    } 
 }

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\DataLayer;
 use Illuminate\Support\Facades\Redirect;
 
-
 class EventoController extends Controller
 {
     /**
@@ -18,13 +17,8 @@ class EventoController extends Controller
 
         $dl = new DataLayer();
         $events = $dl->listEvents();
-        return view('evento.events')->with('eventi',$events);
+        return view('evento.events')->with('eventi', $events);
     }
-    /*public function create()
-    {
-        $dl = new DataLayer();
-        return view('evento.createEvento');
-    }*/ 
 
     public function create()
     {
@@ -41,6 +35,7 @@ class EventoController extends Controller
         $request->validate([
             'titolo' => 'required|string|max:255',
             'contenuto' => 'required|string',
+            'data' => 'required|date',
             'immagine' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
     
@@ -56,111 +51,105 @@ class EventoController extends Controller
             $request->input('titolo'),
             $_SESSION['loggedID'],
             $request->input('contenuto'),
-            $imagePath // Pass the image path instead of the file
+            $imagePath, // Pass the image path instead of the file
+            $request->input('data')
         );
     
         // Redirect the user to the event index page with a success message
         return redirect()->route('evento.index')->with('success', 'Evento created successfully.');
     }
-    /*public function store(Request $request){
-        $d1=new DataLayer();
-        $d1->addEvento($request->input('titolo'), $_SESSION['loggedID'],$request->input('contenuto'), $request->input('immagine'));
-        return Redirect::to(route('evento.index'));
-    }*/
+
     public function store(Request $request)
-{
-    //session_start();
-    $request->validate([
-        'titolo' => 'required|string|max:255',
-        'contenuto' => 'required|string',
-        'immagine' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    ]);
-
-    $dl = new DataLayer();
-
-    // If the ID is present, update the existing event
-    if ($request->has('id') && $request->input('id') !== '') {
-        $dl->editEvento(
-            $request->input('id'),
-            $request->input('titolo'),
-            $_SESSION['loggedID'],
-            $request->input('contenuto'),
-            $request->file('immagine')
-        );
-    } else {
-        // Otherwise, create a new event
-        $dl->addEvento(
-            $request->input('titolo'),
-            $_SESSION['loggedID'],
-            $request->input('contenuto'),
-            $request->file('immagine')
-        );
-    }
-
-    return Redirect::to(route('evento.index'));
-}
-
-    public function show(string $id){
-        session_start();
-        $d1= new DataLayer();
-        $evento=$d1->findEvento($id);
-        if ($evento != null){
-            return view('evento.details')->with('evento',$evento);
-
-        }else {
-            return view('errors.404')->with('message','Wrong  ID has been used!');
-        }
-    }
-    public function edit($id = null)
     {
-    $dl = new DataLayer();
-    
-    // If ID is provided, try to find the event
-    if ($id) {
-        $evento = $dl->findEvento($id);
-        if (!$evento) {
-            return view('errors.404')->with('message', 'Invalid event ID');
-        }
-    } else {
-        // Otherwise, create a new event instance
-        $evento = new \App\Models\Evento();
-    }
-
-    return view('evento.editEvento')->with('evento', $evento);
-}
-
-
-    /*public function update(Request $request, string $id){
+        $request->validate([
+            'titolo' => 'required|string|max:255',
+            'contenuto' => 'required|string',
+            'data' => 'required|date',
+            'immagine' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
         $dl = new DataLayer();
-        $dl->editEvento($id, $request->input('titol'));
+
+        // If the ID is present, update the existing event
+        if ($request->has('id') && $request->input('id') !== '') {
+            $dl->editEvento(
+                $request->input('id'),
+                $request->input('titolo'),
+                $_SESSION['loggedID'],
+                $request->input('contenuto'),
+                $request->file('immagine'),
+                $request->input('data')
+            );
+        } else {
+            // Otherwise, create a new event
+            $dl->addEvento(
+                $request->input('titolo'),
+                $_SESSION['loggedID'],
+                $request->input('contenuto'),
+                $request->file('immagine'),
+                $request->input('data')
+            );
+        }
+
         return Redirect::to(route('evento.index'));
     }
-        */
-        public function update(Request $request, string $id)
-{
 
-    session_start();
-    $messages = [
-        'immagine.mimes' => 'Il file deve essere jpg, jpeg o png',
-    ];
-    $request->validate([
-        'titolo' => 'required|string|max:255',
-        'contenuto' => 'required|string',
-        'immagine' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    ]);
+    public function show(string $id)
+    {
+        session_start();
+        $d1 = new DataLayer();
+        $evento = $d1->findEvento($id);
+        if ($evento != null) {
+            return view('evento.details')->with('evento', $evento);
+        } else {
+            return view('errors.404')->with('message', 'Wrong ID has been used!');
+        }
+    }
 
-    $dl = new DataLayer();
-    $dl->editEvento(
-        $id,    
-        $request->input('titolo'),
-        $_SESSION['loggedID'],
-        $request->input('contenuto'),
-        $request->file('immagine')
-    );
+    public function edit($id = null)
+    {
+        $dl = new DataLayer();
+    
+        // If ID is provided, try to find the event
+        if ($id) {
+            $evento = $dl->findEvento($id);
+            if (!$evento) {
+                return view('errors.404')->with('message', 'Invalid event ID');
+            }
+        } else {
+            // Otherwise, create a new event instance
+            $evento = new \App\Models\Evento();
+        }
 
-    return Redirect::to(route('evento.index'));
-}
+        return view('evento.editEvento')->with('evento', $evento);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        session_start();
+        $messages = [
+            'immagine.mimes' => 'Il file deve essere jpg, jpeg o png',
+        ];
+        $request->validate([
+            'titolo' => 'required|string|max:255',
+            'contenuto' => 'required|string',
+            'data' => 'required|date',
+            'immagine' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $dl = new DataLayer();
+        $dl->editEvento(
+            $id,    
+            $request->input('titolo'),
+            $_SESSION['loggedID'],
+            $request->input('contenuto'),
+            $request->file('immagine'),
+            $request->input('data')
+        );
+
+        return Redirect::to(route('evento.index'));
+    }
+
     public function destroy(string $id)
     {
         $dl = new DataLayer();

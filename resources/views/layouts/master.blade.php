@@ -112,7 +112,8 @@ Aggiungere in home una sezione con immagini che porta direttamente agli eventi--
                 <div class="mb-3 mb-md-0">
                     <p>Email: <a href="mailto:segreteria@bmwyoungtimerclubitalia.it">segreteria@bmwyoungtimerclubitalia.it</a></p>
                     <p>Partita IVA: 123456789</p>
-                </div>
+                    <p class="fs-4 text-danger">Sito in costruzione</p>
+                    </div>
                 <div>
                     <a href="https://www.facebook.com/groups/BmwYoungtimerClubItalia?locale=it_IT" target="_blank" class="ms-2">
                         <i class="fab fa-facebook fa-2x"></i>

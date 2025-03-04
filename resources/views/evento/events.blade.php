@@ -2,7 +2,6 @@
 
 @section('title','Eventi')
 
-
 @section('active_eventi','active')
 
 @section('breadcrumb')
@@ -23,6 +22,7 @@
                     <div class="card-body">
                         <h5 class="card-title" style="padding-top: 10px; padding-bottom: 10px;">{{ $evento->titolo }}</h5>
                         <p class="card-text">{{ Str::limit($evento->contenuto, 100) }}</p>
+                        <p class="card-text"><small class="text-muted">Data Evento: {{ \Carbon\Carbon::parse($evento->data)->format('d M Y') }}</small></p>
                         <a href="{{ route('evento.show', $evento->id) }}" class="btn btn-primary">Leggi i dettagli</a>
                     </div>
                     <div class="card-footer">   
