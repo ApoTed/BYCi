@@ -8,6 +8,8 @@ use App\Http\Controllers\EventoController;
 use App\Http\Controllers\CommentoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConvenzioniController;
+use App\Http\Controllers\ClubController;
+
 
 
 
@@ -21,6 +23,10 @@ Route::get('/ajaxUser', [AuthController::class, 'ajaxCheckForEmail']);
 //convenzioni
 Route::get('/convenzione/convenzioni', [ConvenzioniController::class, 'index'])->name('convenzioni');
 
+// Club routes
+Route::get('/club', [ClubController::class, 'show'])->name('club.show');
+Route::get('/club/edit', [ClubController::class, 'edit'])->name('club.edit');
+Route::put('/club/update', [ClubController::class, 'update'])->name('club.update');
 
 // Public routes for viewing events
 Route::resource('evento', EventoController::class);

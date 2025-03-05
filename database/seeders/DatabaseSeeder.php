@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Evento;
+use App\Models\Club;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,9 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //$this->createUsers();
-        //$this->createConvenzioni();
+        $this->createUsers();
+        $this->createConvenzioni();
         $this->createEventi();
+        $this->createClub();
 
     }
 
@@ -62,6 +64,19 @@ class DatabaseSeeder extends Seeder
             'immagine' => 'images/evento2.jpg',
             'user_id' => 1, // Assicurati che l'utente con ID 1 esista
             'data' => '2025-04-15',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+    public function createClub(){
+        Club::create([
+            'titolo' => 'BMW Youngtimer Club',
+            'descrizione' => 'Il club per gli appassionati di BMW Youngtimer
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            'immagine' => 'public/img/01_BMW_Clubs_Logos_BMWCTC_RZ_white.png',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

@@ -43,6 +43,16 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('commento', function (Blueprint $table) {
+            if (Schema::hasColumn('commento', 'user_id')) {
+                $table->dropForeign(['user_id']);
+            }
+        });
+        Schema::table('evento', function (Blueprint $table) {
+            if (Schema::hasColumn('evento', 'user_id')) {
+                $table->dropForeign(['user_id']);
+            }
+        });
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
